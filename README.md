@@ -1,4 +1,4 @@
-Фулл стэк проект FS-project
+### Фулл стэк проект FS-project
 
 
-*[Репозиторий серверной части проекта](https://github.com/Feelcover/FS-project-backend)
+* [Репозиторий серверной части проекта](https://github.com/Feelcover/FS-project-backend)
