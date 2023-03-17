@@ -1,5 +1,4 @@
-import React from "react";
-
+import { Fragment } from "react";
 import { SideBlock } from "./SideBlock";
 import ListItem from "@mui/material/ListItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
@@ -14,7 +13,7 @@ export const CommentsBlock = ({ items, children, isLoading = true }) => {
     <SideBlock title="Комментарии">
       <List>
         {(isLoading ? [...Array(5)] : items).map((obj, index) => (
-          <React.Fragment key={index}>
+          <Fragment key={index}>
             <ListItem alignItems="flex-start">
               <ListItemAvatar>
                 {isLoading ? (
@@ -36,7 +35,7 @@ export const CommentsBlock = ({ items, children, isLoading = true }) => {
               )}
             </ListItem>
             <Divider variant="inset" component="li" />
-          </React.Fragment>
+          </Fragment>
         ))}
       </List>
       {children}
