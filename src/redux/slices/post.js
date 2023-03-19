@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-
 const initialState = {
   posts: {
     items: [],
@@ -13,7 +12,11 @@ const initialState = {
 };
 
 const postsSlice = createSlice({
-    name: "posts",
-    initialState,
-    reducers:{}
-})
+  name: "posts",
+  initialState,
+  reducers: {
+    
+  },
+});
+
+export default postsSlice.reducer
