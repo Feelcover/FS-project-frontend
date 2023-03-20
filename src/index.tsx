@@ -15,7 +15,7 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-  <React.StrictMode>
+  <>
     <CssBaseline />
     <ThemeProvider theme={theme}>
       <Provider store={store}>
@@ -24,5 +24,5 @@ root.render(
       </BrowserRouter>
       </Provider>
     </ThemeProvider>
-  </React.StrictMode>
+  </>
 );

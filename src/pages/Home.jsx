@@ -5,12 +5,15 @@ import Grid from '@mui/material/Grid';
 import { Post } from '../components/Post';
 import { TagsBlock } from '../components/TagsBlock';
 import { CommentsBlock } from '../components/CommentsBlock';
-import axios from '../utils/axios';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { fetchPosts } from '../redux/slices/post';
 
 export const Home = () => {
-
+  const {status} = useSelector(state => state.postsReducer.posts)
+  const dispatch = useDispatch();
   useEffect(() => {
-  axios.get("/posts")
+    dispatch(fetchPosts())
   }, [])
   
 
