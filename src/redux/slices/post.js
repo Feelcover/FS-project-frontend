@@ -25,12 +25,10 @@ const postsSlice = createSlice({
     builder.addCase(fetchPosts.pending, (state) => {
       state.posts.items = [];
       state.posts.status = "loading";
-      console.log("loading");
     });
     builder.addCase(fetchPosts.fulfilled, (state, action) => {
       state.posts.items = action.payload;
       state.posts.status = "success";
-      console.log("success");
     });
     builder.addCase(fetchPosts.rejected, (state) => {
       state.posts.items = [];
