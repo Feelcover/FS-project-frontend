@@ -11,7 +11,8 @@ import { fetchPosts, fetchTags } from '../redux/slices/post';
 
 export const Home = () => {
   const {posts, tags} = useSelector(state => state.postsReducer);
-  const isLoading = posts.status === "loading";
+  const isLoadingPosts = posts.status === "loading";
+  const isLoadingTags = tags.status === "loading";
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchPosts());
@@ -26,8 +27,8 @@ export const Home = () => {
       </Tabs>
       <Grid container spacing={4}>
         <Grid xs={8} item>
-          {(isLoading ? [...Array(5)] : posts.items).map((item, index) => 
-          isLoading ? (
+          {(isLoadingPosts ? [...Array(5)] : posts.items).map((item, index) => 
+          isLoadingPosts ? (
             <Post key={index} isLoading={true}/>
           ) : (
             <Post
@@ -45,7 +46,7 @@ export const Home = () => {
           )}
         </Grid>
         <Grid xs={4} item>
-          <TagsBlock items={['react', 'typescript', 'заметки']} isLoading={false} />
+          <TagsBlock items={tags.items} isLoading={isLoadingTags} />
           <CommentsBlock
             items={[
               {
