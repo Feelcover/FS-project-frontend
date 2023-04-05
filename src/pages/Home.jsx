@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchPosts, fetchTags } from '../redux/slices/post';
 
 export const Home = () => {
-  const {posts, tags} = useSelector(state => state.postsReducer);
+  const { posts, tags } = useSelector(state => state.postsReducer);
   const isLoadingPosts = posts.status === "loading";
   const isLoadingTags = tags.status === "loading";
   const dispatch = useDispatch();
@@ -18,7 +18,7 @@ export const Home = () => {
     dispatch(fetchPosts());
     dispatch(fetchTags());
   }, [])
-  
+
   return (
     <>
       <Tabs style={{ marginBottom: 15 }} value={0} aria-label="basic tabs example">
@@ -27,22 +27,22 @@ export const Home = () => {
       </Tabs>
       <Grid container spacing={4}>
         <Grid xs={8} item>
-          {(isLoadingPosts ? [...Array(5)] : posts.items).map((item, index) => 
-          isLoadingPosts ? (
-            <Post key={index} isLoading={true}/>
-          ) : (
-            <Post
-              id={item._id}
-              title={item.title}
-              imageUrl={item.imageUrl}
-              user={item.user}
-              createdAt={item.createdAt}
-              viewsCount={item.viewsCount}
-              commentsCount={3}
-              tags={item.tags}
-              isEditable
-            />
-          )
+          {(isLoadingPosts ? [...Array(5)] : posts.items).map((item, index) =>
+            isLoadingPosts ? (
+              <Post key={index} isLoading={true} />
+            ) : (
+              <Post
+                id={item._id}
+                title={item.title}
+                imageUrl={item.imageUrl}
+                user={item.user}
+                createdAt={item.createdAt}
+                viewsCount={item.viewsCount}
+                commentsCount={3}
+                tags={item.tags}
+                isEditable
+              />
+            )
           )}
         </Grid>
         <Grid xs={4} item>

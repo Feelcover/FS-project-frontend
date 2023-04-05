@@ -3,7 +3,6 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import styles from "./AddComment.module.scss";
 
-
 export const Index = () => {
   return (
     <>
