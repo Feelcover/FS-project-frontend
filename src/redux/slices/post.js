@@ -28,28 +28,28 @@ const postsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchPosts.pending, (state) => {
-      state.posts.items = [];
       state.posts.status = "loading";
+      state.posts.items = [];
     });
     builder.addCase(fetchTags.pending, (state) => {
-      state.tags.items = [];
       state.tags.status = "loading";
+      state.tags.items = [];
     });
     builder.addCase(fetchPosts.fulfilled, (state, action) => {
-      state.posts.items = action.payload;
       state.posts.status = "success";
+      state.posts.items = action.payload;
     });
     builder.addCase(fetchTags.fulfilled, (state, action) => {
-      state.tags.items = action.payload;
       state.tags.status = "success";
+      state.tags.items = action.payload;
     });
     builder.addCase(fetchPosts.rejected, (state) => {
-      state.posts.items = [];
       state.posts.status = "error";
+      state.posts.items = [];
     });
     builder.addCase(fetchTags.rejected, (state) => {
-      state.tags.items = [];
       state.tags.status = "error";
+      state.tags.items = [];
     });
   },
 });

@@ -6,7 +6,6 @@ import { Post } from '../components/Post';
 import { TagsBlock } from '../components/TagsBlock';
 import { CommentsBlock } from '../components/CommentsBlock';
 import { useDispatch, useSelector } from 'react-redux';
-
 import { fetchPosts, fetchTags } from '../redux/slices/post';
 
 export const Home = () => {
