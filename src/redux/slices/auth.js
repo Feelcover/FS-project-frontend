@@ -5,6 +5,10 @@ export const fetchUser = createAsyncThunk("posts/fetchUser", async (params) => {
   const { data } = await axios.post("/auth/login", params);
   return data;
 });
+export const fetchUserMe = createAsyncThunk("posts/fetchUserMe", async () => {
+  const { data } = await axios.get("/auth/me");
+  return data;
+});
 
 const initialState = {
   data: null,
@@ -32,7 +36,20 @@ const authSlice = createSlice({
       state.status = "error";
       state.data = null;
     });
+    builder.addCase(fetchUserMe.pending, (state) => {
+      state.status = "loading";
+      state.data = null;
+    });
+    builder.addCase(fetchUserMe.fulfilled, (state, action) => {
+      state.status = "success";
+      state.data = action.payload;
+    });
+    builder.addCase(fetchUserMe.rejected, (state) => {
+      state.status = "error";
+      state.data = null;
+    });
   },
+
 });
 
 export const isAuthSelector = (state) => Boolean(state.authReducer.data);
