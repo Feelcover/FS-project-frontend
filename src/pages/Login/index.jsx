@@ -11,7 +11,6 @@ import { Navigate } from "react-router-dom";
 export const Login = () => {
   const dispatch = useDispatch();
   const isAuth = useSelector(isAuthSelector);
-  console.log(isAuth);
   const {
     register,
     handleSubmit,
@@ -25,11 +24,11 @@ export const Login = () => {
   });
   const onSubmit = async (value) => {
     const data = await dispatch(fetchUser(value));
-    if (data.payload.token) {
-      window.localStorage.setItem("token", data.payload.token);
-    }
     if (!data.payload) {
       window.alert("Не удалось авторизоваться");
+    }
+    if (data.payload.token) {
+      window.localStorage.setItem("token", data.payload.token);
     }
   };
 
@@ -60,7 +59,7 @@ export const Login = () => {
           {...register("password", { required: "Укажите пароль" })}
           fullWidth
         />
-        <Button type="submit" size="large" variant="contained" fullWidth>
+        <Button disabled = {!isValid} type="submit" size="large" variant="contained" fullWidth>
           Войти
         </Button>
       </form>
