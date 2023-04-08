@@ -20,6 +20,7 @@ export const Home = () => {
     dispatch(fetchTags());
   }, []);
 
+
   return (
     <>
       <Tabs

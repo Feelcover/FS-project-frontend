@@ -37,7 +37,7 @@ const postsSlice = createSlice({
     });
     builder.addCase(fetchPosts.fulfilled, (state, action) => {
       state.posts.status = "success";
-      state.posts.items = action.payload;
+      state.posts.items = action.payload.reverse();
     });
     builder.addCase(fetchTags.fulfilled, (state, action) => {
       state.tags.status = "success";
