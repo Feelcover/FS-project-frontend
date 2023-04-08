@@ -8,16 +8,26 @@ import styles from "./AddPost.module.scss";
 import { isAuthSelector } from "../../redux/slices/auth";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
+import axios from "../../utils/axios";
 
 export const AddPost = () => {
   const [value, setValue] = React.useState("");
-  const [field, setField] = React.useState({ title: "", tags: "" });
-
+  const [field, setField] = React.useState({ title: "", tags: "", imageUrl:""});
   const fileRef = React.useRef(null);
-
-  const imageUrl = "";
   const isAuth = useSelector(isAuthSelector);
-  const handleChangeFile = () => {};
+  const handleChangeFile = async (evt) => {
+    try {
+      const formData = new FormData();
+      const file = evt.target.files[0];
+      formData.append("image", file);
+      const { data } = await axios.post("/upload", formData);
+      const url = data.url.replace('..','')
+      setField({...field, imageUrl: url });
+    } catch (err) {
+      console.log(err);
+      alert("Ошибка при загрузке файла");
+    }
+  };
 
   const onClickRemoveImage = () => {};
 
@@ -52,17 +62,21 @@ export const AddPost = () => {
         Загрузить превью
       </Button>
       <input type="file" ref={fileRef} onChange={handleChangeFile} hidden />
-      {imageUrl && (
-        <Button variant="contained" color="error" onClick={onClickRemoveImage}>
-          Удалить
-        </Button>
-      )}
-      {imageUrl && (
-        <img
-          className={styles.image}
-          src={`http://localhost:4444${imageUrl}`}
-          alt="Uploaded"
-        />
+      {field.imageUrl && (
+        <>
+          <Button
+            variant="contained"
+            color="error"
+            onClick={onClickRemoveImage}
+          >
+            Удалить
+          </Button>
+          <img
+            className={styles.image}
+            src={`http://localhost:4444${field.imageUrl}`}
+            alt="Uploaded"
+          />
+        </>
       )}
       <br />
       <br />
