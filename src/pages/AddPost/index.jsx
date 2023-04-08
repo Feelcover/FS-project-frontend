@@ -45,7 +45,7 @@ loading: false});
       const fields = {
         title: field.title,
         imageUrl: `http://localhost:4444${field.imageUrl}`,
-        tags: field.tags,
+        tags: field.tags.split(','),
         text: text,
       };
       const { data } = await axios.post("/posts", fields); 
