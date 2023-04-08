@@ -10,10 +10,13 @@ import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 
 export const AddPost = () => {
-  const imageUrl = "";
   const [value, setValue] = React.useState("");
-  const isAuth = useSelector(isAuthSelector);
+  const [field, setField] = React.useState({ title: "", tags: "" });
 
+  const fileRef = React.useRef(null);
+
+  const imageUrl = "";
+  const isAuth = useSelector(isAuthSelector);
   const handleChangeFile = () => {};
 
   const onClickRemoveImage = () => {};
@@ -37,14 +40,18 @@ export const AddPost = () => {
     []
   );
 
-  return (!window.localStorage.getItem("token") && !isAuth) ? (
+  return !window.localStorage.getItem("token") && !isAuth ? (
     <Navigate to="/" />
   ) : (
     <Paper style={{ padding: 30 }}>
-      <Button variant="outlined" size="large">
+      <Button
+        variant="outlined"
+        size="large"
+        onClick={() => fileRef.current.click()}
+      >
         Загрузить превью
       </Button>
-      <input type="file" onChange={handleChangeFile} hidden />
+      <input type="file" ref={fileRef} onChange={handleChangeFile} hidden />
       {imageUrl && (
         <Button variant="contained" color="error" onClick={onClickRemoveImage}>
           Удалить
@@ -61,12 +68,16 @@ export const AddPost = () => {
       <br />
       <TextField
         classes={{ root: styles.title }}
+        value={field.title}
+        onChange={(e) => setField({ ...field, title: e.target.value })}
         variant="standard"
         placeholder="Заголовок статьи..."
         fullWidth
       />
       <TextField
         classes={{ root: styles.tags }}
+        value={field.tags}
+        onChange={(e) => setField({ ...field, tags: e.target.value })}
         variant="standard"
         placeholder="Тэги"
         fullWidth
