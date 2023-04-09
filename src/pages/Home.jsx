@@ -7,7 +7,6 @@ import { TagsBlock } from "../components/TagsBlock";
 import { CommentsBlock } from "../components/CommentsBlock";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPosts, fetchTags } from "../redux/slices/post";
-import { isAuthSelector } from "../redux/slices/auth";
 
 export const Home = () => {
   const { posts, tags } = useSelector((state) => state.postsReducer);
@@ -40,7 +39,7 @@ export const Home = () => {
               <Post
                 id={item._id}
                 title={item.title}
-                imageUrl={item.imageUrl}
+                imageUrl={item.imageUrl? item.imageUrl : ''}
                 user={item.user}
                 createdAt={item.createdAt}
                 viewsCount={item.viewsCount}
