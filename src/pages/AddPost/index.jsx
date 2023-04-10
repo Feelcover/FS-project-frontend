@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import TextField from "@mui/material/TextField";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
@@ -7,13 +7,18 @@ import "easymde/dist/easymde.min.css";
 import styles from "./AddPost.module.scss";
 import { isAuthSelector } from "../../redux/slices/auth";
 import { useSelector } from "react-redux";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import axios from "../../utils/axios";
 
 export const AddPost = () => {
   const [text, setText] = React.useState("");
-  const [field, setField] = React.useState({ title: "", tags: '', imageUrl:"",
-loading: false});
+  const [field, setField] = React.useState({
+    title: "",
+    tags: "",
+    imageUrl: "",
+    loading: false,
+  });
+  const { id } = useParams();
   const fileRef = React.useRef(null);
   const navigate = useNavigate();
   const isAuth = useSelector(isAuthSelector);
@@ -23,8 +28,8 @@ loading: false});
       const file = evt.target.files[0];
       formData.append("image", file);
       const { data } = await axios.post("/upload", formData);
-      const url = data.url.replace('..','')
-      setField({...field, imageUrl: url });
+      const url = data.url.replace("..", "");
+      setField({ ...field, imageUrl: url });
     } catch (err) {
       console.log(err);
       alert("Ошибка при загрузке файла");
@@ -32,31 +37,31 @@ loading: false});
   };
 
   const onClickRemoveImage = () => {
-    setField({...field, imageUrl: "" });
+    setField({ ...field, imageUrl: "" });
   };
 
   const onChange = React.useCallback((value) => {
     setText(value);
   }, []);
 
-  const onSubmit = async()=>{
+  const onSubmit = async () => {
     try {
-      setField({...field, loading: true});
+      setField({ ...field, loading: true });
       const fields = {
         title: field.title,
         imageUrl: `http://localhost:4444${field.imageUrl}`,
-        tags: field.tags.split(','),
+        tags: field.tags.split(","),
         text: text,
       };
-      const { data } = await axios.post("/posts", fields); 
+      const { data } = await axios.post("/posts", fields);
       const id = data._id;
-      setField({...field, loading: false});
+      setField({ ...field, loading: false });
       navigate(`/posts/${id}`);
     } catch (err) {
       console.log(err);
       alert("Ошибка при создании поста");
     }
-  }
+  };
 
   const options = React.useMemo(
     () => ({
@@ -72,6 +77,20 @@ loading: false});
     }),
     []
   );
+
+  useEffect(() => {
+    if (id) {
+      axios.get(`/posts/${id}`).then((res) => {
+        setText(res.text);
+        setField({
+          ...field,
+          title: res.title,
+          imageUrl: res.imageUrl,
+          tags: res.tags.join(", "),
+        });
+      });
+    }
+  }, []);
 
   return !window.localStorage.getItem("token") && !isAuth ? (
     <Navigate to="/" />
