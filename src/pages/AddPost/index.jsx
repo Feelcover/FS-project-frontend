@@ -77,18 +77,24 @@ export const AddPost = () => {
     }),
     []
   );
-
   useEffect(() => {
     if (id) {
-      axios.get(`/posts/${id}`).then((res) => {
-        setText(res.text);
-        setField({
-          ...field,
-          title: res.title,
-          imageUrl: res.imageUrl,
-          tags: res.tags.join(", "),
+      axios
+        .get(`/posts/${id}`)
+        .then(({ data }) => {
+          setText(data.text);
+          const img = data.imageUrl.replace("http://localhost:4444", "");
+          setField({
+            ...field,
+            title: data.title,
+            imageUrl: img,
+            tags: data.tags.join(", "),
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+          alert("Ошибка получения статьи");
         });
-      });
     }
   }, []);
 
