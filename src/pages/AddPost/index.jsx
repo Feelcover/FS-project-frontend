@@ -19,6 +19,7 @@ export const AddPost = () => {
     loading: false,
   });
   const { id } = useParams();
+  const isEdit = Boolean(id);
   const fileRef = React.useRef(null);
   const navigate = useNavigate();
   const isAuth = useSelector(isAuthSelector);
@@ -53,10 +54,12 @@ export const AddPost = () => {
         tags: field.tags.split(","),
         text: text,
       };
-      const { data } = await axios.post("/posts", fields);
-      const id = data._id;
+      const { data } = isEdit
+        ? await axios.patch(`/posts/${id}`, fields)
+        : await axios.post("/posts", fields);
+      const _id = isEdit? id : data._id;
       setField({ ...field, loading: false });
-      navigate(`/posts/${id}`);
+      navigate(`/posts/${_id}`);
     } catch (err) {
       console.log(err);
       alert("Ошибка при создании поста");
@@ -152,7 +155,7 @@ export const AddPost = () => {
       />
       <div className={styles.buttons}>
         <Button size="large" variant="contained" onClick={onSubmit}>
-          Опубликовать
+          {isEdit ? "Сохранить" : "Опубликовать"}
         </Button>
         <a href="/">
           <Button size="large">Отмена</Button>
