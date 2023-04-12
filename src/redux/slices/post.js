@@ -6,6 +6,11 @@ export const fetchPosts = createAsyncThunk("posts/fetchPosts", async () => {
   return data;
 });
 
+export const fetchPostsByView = createAsyncThunk("posts/fetchPostsByView", async () => {
+  const { data } = await axios.get("/posts/most-view");
+  return data;
+});
+
 export const fetchTags = createAsyncThunk("posts/fetchTags", async () => {
   const { data } = await axios.get("/tags");
   return data;
@@ -38,6 +43,10 @@ const postsSlice = createSlice({
       state.posts.status = "loading";
       state.posts.items = [];
     });
+    builder.addCase(fetchPostsByView.pending, (state) => {
+      state.posts.status = "loading";
+      state.posts.items = [];
+    });
     builder.addCase(fetchTags.pending, (state) => {
       state.tags.status = "loading";
       state.tags.items = [];
@@ -49,13 +58,21 @@ const postsSlice = createSlice({
     });
     builder.addCase(fetchPosts.fulfilled, (state, action) => {
       state.posts.status = "success";
-      state.posts.items = action.payload.reverse();
+      state.posts.items = action.payload;
+    });
+    builder.addCase(fetchPostsByView.fulfilled, (state, action) => {
+      state.posts.status = "success";
+      state.posts.items = action.payload;
     });
     builder.addCase(fetchTags.fulfilled, (state, action) => {
       state.tags.status = "success";
       state.tags.items = action.payload;
     });
 
+    builder.addCase(fetchPostsByView.rejected, (state) => {
+      state.posts.status = "error";
+      state.posts.items = [];
+    });
     builder.addCase(fetchPosts.rejected, (state) => {
       state.posts.status = "error";
       state.posts.items = [];
