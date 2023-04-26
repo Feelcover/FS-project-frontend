@@ -1,5 +1,5 @@
 {
-  "name": "react-blog",
+  "name": "react FS-project by Andrey Chebanov",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -49,5 +49,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Feelcover/FS-project-frontend"
   }
 }
