@@ -9,10 +9,13 @@ export const fetchUserMe = createAsyncThunk("posts/fetchUserMe", async () => {
   const { data } = await axios.get("/auth/me");
   return data;
 });
-export const fetchRegister = createAsyncThunk("posts/fetchRegister", async (params) => {
-  const { data } = await axios.post("/auth/register", params);
-  return data;
-});
+export const fetchRegister = createAsyncThunk(
+  "posts/fetchRegister",
+  async (params) => {
+    const { data } = await axios.post("/auth/register", params);
+    return data;
+  }
+);
 
 const initialState = {
   data: null,
@@ -65,9 +68,8 @@ const authSlice = createSlice({
       state.data = null;
     });
   },
-
 });
 
 export const isAuthSelector = (state) => Boolean(state.authReducer.data);
-export const {logout} = authSlice.actions;
+export const { logout } = authSlice.actions;
 export default authSlice.reducer;
